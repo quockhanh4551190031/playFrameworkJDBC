@@ -1,0 +1,52 @@
+@import play.api.mvc.RequestHeader
+@()(implicit request: RequestHeader)
+
+@main("Register") {
+    <h1>Register</h1>
+    <form id="registerForm">
+        @helper.CSRF.formField
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <a href="@routes.HomeController.index()">Back to login</a>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const token = document.querySelector('input[name="csrfToken"]').value;
+            const formData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Csrf-Token': token
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    window.location.href = '/login';
+                } else {
+                    // Display the error message from the server
+                    alert(result.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+} 

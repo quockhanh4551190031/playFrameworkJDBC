@@ -1,0 +1,93 @@
+@import play.api.mvc.RequestHeader
+@(username: String)(implicit request: RequestHeader)
+
+@main("Follows") {
+    <div class="header">
+        <h1>@username's Network</h1>
+        <div>
+            <a href="@routes.HomeController.index()" class="btn">Home</a>
+            <a href="@routes.HomeController.logout()" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="content">
+        @helper.CSRF.formField
+        <div class="follows-container">
+            <div class="followers-section">
+                <h2>Followers</h2>
+                <div id="followersList" class="users-list"></div>
+            </div>
+            <div class="following-section">
+                <h2>Following</h2>
+                <div id="followingList" class="users-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadFollowers() {
+            const token = document.querySelector('input[name="csrfToken"]').value;
+            try {
+                const response = await fetch('/api/followers', {
+                    headers: {
+                        'Csrf-Token': token
+                    }
+                });
+                const followers = await response.json();
+                console.log(followers);
+                const followersList = document.getElementById('followersList');
+                followersList.innerHTML = followers.map(user => `
+                    <div class="user-item">
+                        <span class="username">${user.username}</span>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading followers:', error);
+            }
+        }
+
+        async function loadFollowing() {
+            const token = document.querySelector('input[name="csrfToken"]').value;
+            try {
+                const response = await fetch('/api/following', {
+                    headers: {
+                        'Csrf-Token': token
+                    }
+                });
+                const following = await response.json();
+                const followingList = document.getElementById('followingList');
+                followingList.innerHTML = following.map(user => `
+                    <div class="user-item">
+                        <span class="username">${user.username}</span>
+                        <button onclick="unfollowUser(${user.id})" class="unfollow-btn">Unfollow</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading following:', error);
+            }
+        }
+
+        async function unfollowUser(userId) {
+            const token = document.querySelector('input[name="csrfToken"]').value;
+            try {
+                const response = await fetch(`/api/follow/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Csrf-Token': token
+                    }
+                });
+
+                if (response.ok) {
+                    loadFollowing();
+                } else {
+                    alert('Failed to unfollow user');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        loadFollowers();
+        loadFollowing();
+    </script>
+} 
