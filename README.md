@@ -21,6 +21,10 @@
 - Nếu đã nhập hết username và password, tài khoản sẽ được tạo và lưu vào database với role mặc định là 'USER'
 - Sau khi đã đăng ký, tự động chuyển hướng đến trang đăng nhập (login)
 
+## Đăng xuất:
+
+- Khi người dùng nhấn Đăng xuất, chương trình sẽ đơn giản là tạo đơn giản là tạo một session mới.
+
 ## Phân quyền (AuthController):
 
 - public CompletionStage<Result> register(Http.Request request):
