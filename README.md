@@ -23,7 +23,8 @@
 
 ## Đăng xuất:
 
-- Khi người dùng nhấn Đăng xuất, chương trình sẽ đơn giản là tạo đơn giản là tạo một session mới.
+- Khi người dùng nhấn Đăng xuất, chương trình sẽ tạo một session mới.
+- Session mới này không có user nào vì thế sẽ tự động chuyển lại trang Đăng nhập (login)
 
 ## Phân quyền (AuthController):
 
