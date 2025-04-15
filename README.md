@@ -2,7 +2,7 @@
 
 ## Bắt đầu chạy app: 
 
-- Khi chạy chương trình, chương trình sẽ chạy phương thức HomeController.index() đầu tiên (được định nghĩa là GET/  controllers.HomeController.index(request: Request) trong file routes vì đó sẽ chạy đường dẫn này đầu tiên)
+- Khi chạy chương trình, chương trình sẽ chạy phương thức HomeController.index() đầu tiên (được định nghĩa là GET/  controllers.HomeController.index(request: Request) trong file routes vì thế sẽ chạy đường dẫn này đầu tiên)
 - Khi đó chương trình sẽ xem trong session có tài khoản nào đăng nhập hay không
 - Nếu không thì sẽ điều hướng đến trang đăng nhập (GET  /login  controllers.HomeController.login(request: Request))
 - Nếu có thì điều hướng thẳng đến trang index
