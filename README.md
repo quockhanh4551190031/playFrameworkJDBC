@@ -6,7 +6,7 @@
 - Khi đó chương trình sẽ xem trong session có tài khoản nào đăng nhập hay không
 - Nếu không thì sẽ điều hướng đến trang đăng nhập (GET  /login  controllers.HomeController.login(request: Request))
 - Nếu có thì điều hướng thẳng đến trang index
-- 
+  
 ## Đăng nhập:
 
 - Khi này bạn bắt đầu nhập tài khoản để đăng nhập nếu chưa có tài khoản trong session
